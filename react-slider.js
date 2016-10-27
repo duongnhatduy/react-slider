@@ -401,15 +401,10 @@
       ];
     },
 
-    _getMouseEventMap: function () {
+    _getEventMap: function () {
       return {
         'mousemove': this._onMouseMove,
-        'mouseup': this._onMouseUp
-      }
-    },
-
-    _getTouchEventMap: function () {
-      return {
+        'mouseup': this._onMouseUp,
         'touchmove': this._onTouchMove,
         'touchend': this._onTouchEnd
       }
@@ -421,7 +416,7 @@
         if (this.props.disabled) return;
         var position = this._getMousePosition(e);
         this._start(i, position[0]);
-        this._addHandlers(this._getMouseEventMap());
+        this._addHandlers(this._getEventMap());
         pauseEvent(e);
       }.bind(this);
     },
@@ -434,7 +429,7 @@
         this.startPosition = position;
         this.isScrolling = undefined; // don't know yet if the user is trying to scroll
         this._start(i, position[0]);
-        this._addHandlers(this._getTouchEventMap());
+        this._addHandlers(this._getEventMap());
         stopPropagation(e);
       }.bind(this);
     },
@@ -474,11 +469,11 @@
     },
 
     _onMouseUp: function () {
-      this._onEnd(this._getMouseEventMap());
+      this._onEnd(this._getEventMap());
     },
 
     _onTouchEnd: function () {
-      this._onEnd(this._getTouchEventMap());
+      this._onEnd(this._getEventMap());
     },
 
     _onEnd: function (eventMap) {
@@ -737,7 +732,7 @@
         this._forceValueFromPosition(position[0], function (i) {
           this._fireChangeEvent('onChange');
           this._start(i, position[0]);
-          this._addHandlers(this._getMouseEventMap());
+          this._addHandlers(this._getEventMap());
         }.bind(this));
       }
 
